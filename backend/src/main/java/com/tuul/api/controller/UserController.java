@@ -1,6 +1,7 @@
 package com.tuul.api.controller;
 
 import com.tuul.api.dto.request.UserLoginRequest;
+import com.tuul.api.dto.response.ApiResponse;
 import com.tuul.api.dto.response.UserLoginResponse;
 import com.tuul.api.dto.request.UserRegisterRequest;
 import com.tuul.service.UserService;
@@ -19,15 +20,18 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<?> register(@Valid @RequestBody UserRegisterRequest request) {
+    public ResponseEntity<ApiResponse<Void>> register(@Valid @RequestBody UserRegisterRequest request) {
         userService.register(request.getName(), request.getEmail(), request.getPassword());
-        return ResponseEntity.ok().body("User registered");
+        return ResponseEntity.ok(ApiResponse.success("User registered"));
+
     }
 
     @PostMapping("/login")
-    public ResponseEntity<UserLoginResponse> login(@Valid @RequestBody UserLoginRequest request) {
+    public ResponseEntity<ApiResponse<UserLoginResponse>> login(@Valid @RequestBody UserLoginRequest request) {
         String token = userService.login(request.getEmail(), request.getPassword());
-        return ResponseEntity.ok(new UserLoginResponse(token));
+        return ResponseEntity.ok(
+                ApiResponse.success("Login successful", new UserLoginResponse(token))
+        );
     }
 }
 
