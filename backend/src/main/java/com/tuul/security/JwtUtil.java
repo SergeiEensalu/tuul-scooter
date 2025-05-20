@@ -1,6 +1,6 @@
-package com.tuul.infrastructure.security;
+package com.tuul.security;
 
-import com.tuul.config.JwtProperties;
+import com.tuul.config.Jwt;
 import io.jsonwebtoken.*;
 import org.springframework.stereotype.Component;
 
@@ -9,23 +9,23 @@ import java.util.Date;
 @Component
 public class JwtUtil {
 
-    private final JwtProperties jwtProperties;
+    private final Jwt jwt;
 
-    public JwtUtil(JwtProperties jwtProperties) {
-        this.jwtProperties = jwtProperties;
+    public JwtUtil(Jwt jwt) {
+        this.jwt = jwt;
     }
 
     public String generateToken(String email) {
         return Jwts.builder()
                 .setSubject(email)
-                .setExpiration(new Date(System.currentTimeMillis() + jwtProperties.getExpirationMs()))
-                .signWith(SignatureAlgorithm.HS256, jwtProperties.getSecret())
+                .setExpiration(new Date(System.currentTimeMillis() + jwt.getExpirationMs()))
+                .signWith(SignatureAlgorithm.HS256, jwt.getSecret())
                 .compact();
     }
 
     public String extractEmail(String token) {
         return Jwts.parser()
-                .setSigningKey(jwtProperties.getSecret())
+                .setSigningKey(jwt.getSecret())
                 .parseClaimsJws(token)
                 .getBody()
                 .getSubject();
@@ -33,7 +33,7 @@ public class JwtUtil {
 
     public boolean isTokenValid(String token) {
         try {
-            Jwts.parser().setSigningKey(jwtProperties.getSecret()).parseClaimsJws(token);
+            Jwts.parser().setSigningKey(jwt.getSecret()).parseClaimsJws(token);
             return true;
         } catch (JwtException e) {
             return false;

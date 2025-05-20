@@ -1,4 +1,4 @@
-package com.tuul.infrastructure.security;
+package com.tuul.security;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

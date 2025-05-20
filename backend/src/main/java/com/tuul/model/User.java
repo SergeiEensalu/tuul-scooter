@@ -1,0 +1,11 @@
+package com.tuul.model;
+
+import lombok.Data;
+
+@Data
+public class User {
+    private String id;
+    private String email;
+    private String passwordHash;
+    private String name;
+}

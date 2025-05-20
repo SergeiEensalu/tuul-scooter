@@ -1,9 +1,11 @@
 package com.tuul.config;
 
 import com.google.auth.oauth2.GoogleCredentials;
+import com.google.cloud.firestore.Firestore;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
-import jakarta.annotation.PostConstruct;
+import com.google.firebase.cloud.FirestoreClient;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import java.io.ByteArrayInputStream;
@@ -19,8 +21,8 @@ public class FirebaseConfig {
         this.firebaseProperties = firebaseProperties;
     }
 
-    @PostConstruct
-    public void init() {
+    @Bean
+    public Firestore firestore() {
         try {
             String json = String.format("""
                             {
@@ -60,6 +62,7 @@ public class FirebaseConfig {
                 FirebaseApp.initializeApp(options);
             }
 
+            return FirestoreClient.getFirestore();
         } catch (Exception e) {
             throw new RuntimeException("Failed to initialize Firebase", e);
         }

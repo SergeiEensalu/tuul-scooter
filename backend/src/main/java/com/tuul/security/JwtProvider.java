@@ -1,4 +1,4 @@
-package com.tuul.infrastructure.security;
+package com.tuul.security;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;

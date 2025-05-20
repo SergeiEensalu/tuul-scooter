@@ -1,9 +1,9 @@
 package com.tuul.api.controller;
 
-import com.tuul.api.dto.UserLoginRequest;
-import com.tuul.api.dto.UserLoginResponse;
-import com.tuul.api.dto.UserRegisterRequest;
-import com.tuul.application.service.UserService;
+import com.tuul.api.dto.request.UserLoginRequest;
+import com.tuul.api.dto.response.UserLoginResponse;
+import com.tuul.api.dto.request.UserRegisterRequest;
+import com.tuul.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,14 +19,15 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<?> register(@Valid @RequestBody UserRegisterRequest request) throws Exception {
-        userService.register(request);
-        return ResponseEntity.ok().body("User registered");
+    public ResponseEntity<String> register(@Valid @RequestBody UserRegisterRequest request) {
+        userService.register(request.getName(), request.getEmail(), request.getPassword());
+        return ResponseEntity.ok("User registered successfully");
     }
 
     @PostMapping("/login")
-    public ResponseEntity<UserLoginResponse> login(@Valid @RequestBody UserLoginRequest request) throws Exception {
+    public ResponseEntity<UserLoginResponse> login(@Valid @RequestBody UserLoginRequest request) {
         String token = userService.login(request.getEmail(), request.getPassword());
         return ResponseEntity.ok(new UserLoginResponse(token));
     }
 }
+

@@ -1,6 +1,6 @@
 package com.tuul.config;
 
-import com.tuul.infrastructure.security.JwtFilter;
+import com.tuul.security.JwtFilter;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,11 +11,11 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
-public class SecurityConfig {
+public class Security {
 
     private final JwtFilter jwtFilter;
 
-    public SecurityConfig(JwtFilter jwtFilter) {
+    public Security(JwtFilter jwtFilter) {
         this.jwtFilter = jwtFilter;
     }
 
