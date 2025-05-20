@@ -1,0 +1,44 @@
+jwt:
+  secret: "my_secret"
+  expiration-ms: 86400000
+
+firebase:
+  type: service_account
+  project_id: tuul-scooter
+  private_key_id: 9d5af18e9356bb9360198c46041d9d522d9f86ee
+  private_key: |
+    -----BEGIN PRIVATE KEY-----
+    MIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQDI92Orjm7BB6ci
+    hEyIPJ23yVXe+Z3T9vuJTyWp7DcEd8eCqpXrbRGx0iksxcwBPEi8RDJHCcTNz/Y6
+    ZWbPVuYPadAAoXGX+pMr/svp7bXTMkhj/nymvqLGzt5C7Oe6NtFzKlEbl2JPOXT6
+    qTNqgYeph2ufSfIlrfetNVYXXRoLyE7q9RNb85tfDLNJjno6ThusIUBK+/6KbD6Q
+    YcOxncFL3XYlRkPAss+w7GF1zPCU5NOKxUvFF3iTny2w/y5idaQIJ46Kwi6TEZ1O
+    Pzqh+tzdQzaIeREsv14VqLGqlBd0TvdUX/+U/1u4yhdYl0QK1+76XLvsAIk2qO6U
+    w9mViZI9AgMBAAECggEAA0QraAnoGJYQbC9cnmg8eKoP4xBeitKRqFvTdQ1kStvM
+    L9OoR8vIL6zb7iDcMyGbiF0kDg3awizrnRZcfek1KFykEfvjFevE1usMvbrB1kgT
+    xMr0PrI21hFdq8EgS7asCnmjw4A0i6zCOc1kiwobk4X3xKkrLjFDfHAIpqzk3qUg
+    QIB2NtGASd/gSRYOq32CKgzl9wdkZDPYzb6Vh9UP7cMPDVU4horAfJrbDZVcgT42
+    3EYfS/Evm+U1J+BTi44B5fgLEAjlYu8fe3a7ltt7+tz25alMWWbGMUxgvPVbXoXb
+    M+zQYZ+DeR4UUz1qwOK6E6ZU6B/5JSYHze15T9uLQQKBgQDtM7LUDF6f0bNWEQA2
+    VPAARB7rKAKBW0qB6arLYcBGaya0Hab7iEQPFbENUGAIB7LquENhgLtkOS1T0h7W
+    niLQObPjg6uruNhoOeuGwZITYHYkgRurqx8pBkB0S4sd/rZ8SFm0wXNE89INWKje
+    98EagDfZYOokT+VciAhCTRUS4QKBgQDY5I0ZynaN3iSm0D8sK9LqCvF3FPL6niaV
+    Dbn8+oXap5i4ZviFhgkAnFnkzeIDCzMWFrpB5RHiBePMjT7vSdvU0ES259qbFliC
+    7ZSziNQY1fCT8PdpGn28eSOTDQ6VbXM2zbFhHOAk4LcfHN+yHDoMbOhOYqjQtCuw
+    LqI3v8cG3QKBgQDf1tqZ2nZtEQHQZUiy/OJjDeWzedUrZw/fmrcvKDa+/RzP+e97
+    DDNVnN2wt7l3unQvpeUIHOg5gu9wWyf41c/6eYl1WOrmqQ+nA4lsaDzGBlBW0HNh
+    Q6GrIBgw5p0ImDZy//+PYMK7Pe9p4tGxX1GeBYMuopMx4yeJc2F/16fcYQKBgQDL
+    gmAXBA8LfJXdY+bylkg3zH7XInP+zigbkZ6jDZpNGRbGZ+/msWZ/CTWb58aa3oZX
+    womPzNVjw+0EAMA9nIrFe4oOKSzIekYgy7XMY6XHi+5Jkj9DglTaZLwJfaXidak2
+    kfhOy95RG/0XF2uZ3rxk7kdnTVFjSrr3fDo/nxWrjQKBgQDTZbhQiV+po8vv4Nlx
+    4E0m69crXVQgPJzg6uleCTbJztKHyCFmouqN/4kitNQAbprHizHzZIl9jEenxX1v
+    M1Igrs6ffpdWjIUbiRS8KwxvNgG8Gu0Z3fewioTkYcG/iF5WzLWV2oGxZPYzluGB
+    XgIB7Hek+BM88claYuskrqr14A==
+    -----END PRIVATE KEY-----
+  client_email: firebase-adminsdk-fbsvc@tuul-scooter.iam.gserviceaccount.com
+  client_id: 111311714908909474890
+  auth_uri: https://accounts.google.com/o/oauth2/auth
+  token_uri: https://oauth2.googleapis.com/token
+  auth_provider_x509_cert_url: https://www.googleapis.com/oauth2/v1/certs
+  client_x509_cert_url: https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-fbsvc%40tuul-scooter.iam.gserviceaccount.com
+  universe_domain: googleapis.com
