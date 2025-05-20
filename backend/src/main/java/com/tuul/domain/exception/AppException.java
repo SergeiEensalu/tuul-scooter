@@ -1,4 +1,4 @@
-package com.tuul.exception;
+package com.tuul.domain.exception;
 
 import lombok.Getter;
 
@@ -10,4 +10,5 @@ public class AppException extends RuntimeException {
         super(message);
         this.code = code;
     }
+
 }

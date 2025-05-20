@@ -1,9 +1,9 @@
-package com.tuul.api.common.handler;
+package com.tuul.api.exception;
 
 import com.tuul.api.common.dto.ApiErrorResponse;
 import com.tuul.api.common.dto.ValidationError;
-import com.tuul.exception.AppException;
-import com.tuul.exception.ErrorCode;
+import com.tuul.domain.exception.AppException;
+import com.tuul.domain.exception.ErrorCode;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -17,10 +17,9 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(AppException.class)
     public ResponseEntity<ApiErrorResponse> handleAppException(AppException ex) {
-        HttpStatus status = mapToHttpStatus(ex.getCode());
         return ResponseEntity
-                .status(status)
-                .body(ApiErrorResponse.of(ex.getCode().getCode(), ex.getMessage()));
+                .status(HttpErrorMapper.mapToHttpStatus(ex.getCode()))
+                .body(HttpErrorMapper.toResponse(ex));
     }
 
     private HttpStatus mapToHttpStatus(ErrorCode code) {

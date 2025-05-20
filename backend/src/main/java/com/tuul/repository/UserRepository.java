@@ -1,6 +1,6 @@
 package com.tuul.repository;
 
-import com.tuul.model.User;
+import com.tuul.domain.model.User;
 
 public interface UserRepository {
     void save(User user);

@@ -1,4 +1,4 @@
-package com.tuul.model;
+package com.tuul.domain.model;
 
 import lombok.Data;
 

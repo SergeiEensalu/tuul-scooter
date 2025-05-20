@@ -1,8 +1,8 @@
-package com.tuul.service;
+package com.tuul.domain.service;
 
-import com.tuul.model.User;
-import com.tuul.exception.AppException;
-import com.tuul.exception.*;
+import com.tuul.domain.exception.ErrorCode;
+import com.tuul.domain.model.User;
+import com.tuul.domain.exception.AppException;
 import com.tuul.repository.UserRepository;
 import com.tuul.security.JwtProvider;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;

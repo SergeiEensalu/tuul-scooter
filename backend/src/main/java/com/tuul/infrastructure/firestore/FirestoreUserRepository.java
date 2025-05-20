@@ -2,11 +2,9 @@ package com.tuul.infrastructure.firestore;
 
 import com.google.cloud.firestore.Firestore;
 import com.google.cloud.firestore.QuerySnapshot;
-import com.tuul.model.User;
+import com.tuul.domain.model.User;
 import com.tuul.repository.UserRepository;
 import org.springframework.stereotype.Repository;
-
-import java.util.UUID;
 
 @Repository
 public class FirestoreUserRepository implements UserRepository {
