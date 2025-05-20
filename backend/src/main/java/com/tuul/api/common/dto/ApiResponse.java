@@ -1,4 +1,4 @@
-package com.tuul.api.dto.response;
+package com.tuul.api.common.dto;
 
 import lombok.Builder;
 

@@ -1,14 +1,11 @@
-package com.tuul.api.dto.request;
+package com.tuul.api.user.dto;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 
 @Getter
-public class UserRegisterRequest {
-    @NotBlank
-    private String name;
-
+public class UserLoginRequest {
     @Email
     private String email;
 
