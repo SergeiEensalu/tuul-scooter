@@ -22,7 +22,7 @@ public class UserController {
 
     @PostMapping("/register")
     public ResponseEntity<ApiResponse<UserRegisterResponse>> register(@Valid @RequestBody UserRegisterRequest request) {
-        userService.register(request.getName(), request.getEmail(), request.getPassword());
+        userService.register(request.name(), request.email(), request.password());
         return ResponseEntity.ok(
                 ApiResponse.success("User registered", new UserRegisterResponse())
         );
@@ -30,7 +30,7 @@ public class UserController {
 
     @PostMapping("/login")
     public ResponseEntity<ApiResponse<UserLoginResponse>> login(@Valid @RequestBody UserLoginRequest request) {
-        String token = userService.login(request.getEmail(), request.getPassword());
+        String token = userService.login(request.email(), request.password());
         return ResponseEntity.ok(
                 ApiResponse.success("Login successful", new UserLoginResponse(token))
         );

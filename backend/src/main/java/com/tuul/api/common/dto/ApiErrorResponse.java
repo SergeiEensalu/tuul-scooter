@@ -13,10 +13,10 @@ public record ApiErrorResponse(
         String status,
         String message,
         String code,
-        List<String> errors,
+        List<ValidationError> errors,
         Instant timestamp
 ) {
-    public static ApiErrorResponse of(String code, String message, List<String> errors) {
+    public static ApiErrorResponse of(String code, String message, List<ValidationError> errors) {
         return ApiErrorResponse.builder()
                 .status("error")
                 .message(message)

@@ -2,13 +2,12 @@ package com.tuul.api.user.dto;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import lombok.Getter;
 
-@Getter
-public class UserLoginRequest {
-    @Email
-    private String email;
+public record UserLoginRequest(
+        @NotBlank(message = "Email is required")
+        @Email(message = "Invalid email format")
+        String email,
 
-    @NotBlank
-    private String password;
-}
+        @NotBlank(message = "Password is required")
+        String password
+) {}
