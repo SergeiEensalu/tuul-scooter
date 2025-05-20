@@ -5,10 +5,12 @@ import lombok.Getter;
 @Getter
 public class AppException extends RuntimeException {
     private final String code;
+    private final int httpStatus;
 
-    public AppException(String code, String message) {
+    public AppException(ErrorCode errorCode, String message) {
         super(message);
-        this.code = code;
+        this.code = errorCode.getCode();
+        this.httpStatus = errorCode.getHttpStatus();
     }
 
 }

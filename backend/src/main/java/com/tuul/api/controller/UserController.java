@@ -19,9 +19,9 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<String> register(@Valid @RequestBody UserRegisterRequest request) {
+    public ResponseEntity<?> register(@Valid @RequestBody UserRegisterRequest request) {
         userService.register(request.getName(), request.getEmail(), request.getPassword());
-        return ResponseEntity.ok("User registered successfully");
+        return ResponseEntity.ok().body("User registered");
     }
 
     @PostMapping("/login")

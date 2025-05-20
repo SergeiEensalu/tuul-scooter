@@ -1,10 +1,18 @@
 package com.tuul.exception;
 
-public enum ErrorCode {
-    USER_ALREADY_EXISTS,
-    INVALID_CREDENTIALS;
+import lombok.Getter;
 
-    public String getCode() {
-        return name();
+@Getter
+public enum ErrorCode {
+    USER_ALREADY_EXISTS("USER_ALREADY_EXISTS", 409),
+    INVALID_CREDENTIALS("INVALID_CREDENTIALS", 401);
+
+    private final String code;
+    private final int httpStatus;
+
+    ErrorCode(String code, int httpStatus) {
+        this.code = code;
+        this.httpStatus = httpStatus;
     }
+
 }

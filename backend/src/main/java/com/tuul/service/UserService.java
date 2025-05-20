@@ -24,7 +24,7 @@ public class UserService {
 
     public void register(String name, String email, String password) {
         if (userRepository.findByEmail(email) != null) {
-            throw new AppException(ErrorCode.USER_ALREADY_EXISTS.getCode(), "User already exists");
+            throw new AppException(ErrorCode.USER_ALREADY_EXISTS, "User already exists");
         }
 
         User user = new User();
@@ -39,7 +39,7 @@ public class UserService {
     public String login(String email, String rawPassword) {
         User existingUser = userRepository.findByEmail(email);
         if (existingUser == null || !encoder.matches(rawPassword, existingUser.getPasswordHash())) {
-            throw new AppException(ErrorCode.INVALID_CREDENTIALS.getCode(), "Invalid credentials");
+            throw new AppException(ErrorCode.INVALID_CREDENTIALS, "Invalid credentials");
         }
 
         return jwtProvider.generateToken(existingUser.getId(), existingUser.getEmail());
