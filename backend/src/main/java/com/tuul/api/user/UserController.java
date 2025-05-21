@@ -6,6 +6,7 @@ import com.tuul.api.user.dto.UserLoginResponse;
 import com.tuul.api.user.dto.UserRegisterRequest;
 import com.tuul.api.user.dto.UserRegisterResponse;
 import com.tuul.application.user.UserService;
+import com.tuul.application.user.dto.CreateUserCommand;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,7 +23,9 @@ public class UserController {
 
     @PostMapping("/register")
     public ResponseEntity<ApiResponse<UserRegisterResponse>> register(@Valid @RequestBody UserRegisterRequest request) {
-        var createdUser = userService.register(request.name(), request.email(), request.password());
+        CreateUserCommand command = new CreateUserCommand(request.name(), request.email(), request.password());
+
+        var createdUser = userService.register(command);
         return ResponseEntity.ok(
                 ApiResponse.success("User registered", new UserRegisterResponse(createdUser.getId(), createdUser.getEmail()))
         );

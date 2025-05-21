@@ -1,5 +1,6 @@
 package com.tuul.application.user;
 
+import com.tuul.application.user.dto.CreateUserCommand;
 import com.tuul.domain.exception.ErrorCode;
 import com.tuul.domain.model.user.User;
 import com.tuul.domain.exception.AppException;
@@ -20,12 +21,12 @@ public class UserService {
         this.jwtProvider = jwtProvider;
     }
 
-    public User register(String name, String email, String password) {
-        if (userRepository.findByEmail(email) != null) {
+    public User register(CreateUserCommand command) {
+        if (userRepository.findByEmail(command.email()) != null) {
             throw new AppException(ErrorCode.USER_ALREADY_EXISTS, "User already exists");
         }
 
-        return userRepository.save(name, email, password);
+        return userRepository.save(command.name(), command.email(), command.password());
     }
 
     public String login(String email, String rawPassword) {
