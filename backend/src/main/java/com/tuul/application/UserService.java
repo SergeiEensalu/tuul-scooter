@@ -1,4 +1,4 @@
-package com.tuul.domain.service;
+package com.tuul.application;
 
 import com.tuul.domain.exception.ErrorCode;
 import com.tuul.domain.model.User;
