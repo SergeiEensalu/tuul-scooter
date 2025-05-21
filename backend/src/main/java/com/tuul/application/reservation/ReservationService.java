@@ -1,7 +1,8 @@
 package com.tuul.application.reservation;
 
 import com.tuul.application.reservation.dto.CreateReservationCommand;
-import com.tuul.domain.model.Reservation;
+import com.tuul.domain.model.reservation.Reservation;
+import com.tuul.domain.model.reservation.ReservationRow;
 import com.tuul.repository.ReservationRepository;
 import org.springframework.stereotype.Service;
 
@@ -23,7 +24,7 @@ public class ReservationService {
 
         double cost = 1.0 + Math.min(durationMinutes, 10) * 0.5 + Math.max(0, durationMinutes - 10) * 0.3;
 
-        Reservation reservation = Reservation.builder()
+        ReservationRow reservationRow = ReservationRow.builder()
                 .userId(command.userId())
                 .vehicleId(command.vehicleId())
                 .startTime(Date.from(command.startTime()))
@@ -35,6 +36,6 @@ public class ReservationService {
                 .cost(cost)
                 .build();
 
-        return reservationRepository.save(reservation);
+        return reservationRepository.save(reservationRow);
     }
 }

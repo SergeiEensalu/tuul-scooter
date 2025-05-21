@@ -29,7 +29,10 @@ public class UserController {
         var createdUser = userService.register(command); // Comment by SERGEI EENSALU: Var to prevent import User from Domain/Service layer.
 
         return ResponseEntity.ok(
-                ApiResponse.success("User registered", new UserRegisterResponse(createdUser.getId(), createdUser.getEmail()))
+                ApiResponse.success(
+                        "User registered",
+                        new UserRegisterResponse(createdUser.getId(), createdUser.getEmail())
+                )
         );
     }
 

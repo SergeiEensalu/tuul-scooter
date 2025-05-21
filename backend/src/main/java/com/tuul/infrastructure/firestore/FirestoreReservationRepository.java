@@ -3,7 +3,8 @@ package com.tuul.infrastructure.firestore;
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.DocumentReference;
 import com.google.cloud.firestore.Firestore;
-import com.tuul.domain.model.Reservation;
+import com.tuul.domain.model.reservation.Reservation;
+import com.tuul.domain.model.reservation.ReservationRow;
 import com.tuul.repository.ReservationRepository;
 import org.springframework.stereotype.Repository;
 
@@ -19,12 +20,24 @@ public class FirestoreReservationRepository implements ReservationRepository {
     }
 
     @Override
-    public Reservation save(Reservation reservation) {
+    public Reservation save(ReservationRow reservationRow) {
         try {
-            ApiFuture<DocumentReference> future = firestore.collection(FirestoreCollections.RESERVATIONS).add(reservation);
+            ApiFuture<DocumentReference> future = firestore.collection(FirestoreCollections.RESERVATIONS).add(reservationRow);
             DocumentReference ref = future.get();
-            reservation.setId(ref.getId());
-            return reservation;
+
+            return Reservation.builder()
+                    .id(ref.getId())
+                    .userId(reservationRow.getUserId())
+                    .vehicleId(reservationRow.getVehicleId())
+                    .startTime(reservationRow.getStartTime())
+                    .endTime(reservationRow.getEndTime())
+                    .startLat(reservationRow.getStartLat())
+                    .startLng(reservationRow.getStartLng())
+                    .endLat(reservationRow.getEndLat())
+                    .endLng(reservationRow.getEndLng())
+                    .cost(reservationRow.getCost())
+                    .build();
+
         } catch (InterruptedException | ExecutionException e) {
             throw new RuntimeException("Failed to save reservation", e);
         }

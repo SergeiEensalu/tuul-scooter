@@ -1,4 +1,4 @@
-package com.tuul.domain.model;
+package com.tuul.domain.model.reservation;
 
 import com.google.cloud.firestore.annotation.Exclude;
 import lombok.Builder;

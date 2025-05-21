@@ -42,6 +42,18 @@ public class ReservationController {
         );
 
         var createdReservation = reservationService.createReservation(command); // Comment by SERGEI EENSALU: Var to prevent import Reservation from Domain/Service layer.
-        return ResponseEntity.ok(ApiResponse.success("Reservation created", ReservationResponse.from(createdReservation)));
+
+        return ResponseEntity.ok(
+                ApiResponse.success(
+                        "Reservation created",
+                        new ReservationResponse(
+                                createdReservation.getId(),
+                                createdReservation.getUserId(),
+                                createdReservation.getVehicleId(),
+                                createdReservation.getStartTime(),
+                                createdReservation.getEndTime()
+                        )
+                )
+        );
     }
 }
