@@ -12,16 +12,19 @@ import java.util.Date;
 public class JwtProvider {
 
     private final Key key;
+    private final long expirationMs;
 
-    private final long expirationMs = 1000 * 60 * 60; // one hour of expiration.
-
-    public JwtProvider(@Value("${jwt.secret}") String secret) {
+    public JwtProvider(
+            @Value("${jwt.secret}") String secret,
+            @Value("${jwt.expiration-ms}") long expirationMs
+    ) {
         this.key = Keys.hmacShaKeyFor(secret.getBytes());
+        this.expirationMs = expirationMs;
     }
 
     public String generateToken(String userId, String email) {
         return Jwts.builder()
-                .setSubject(userId)
+                .setSubject(userId) // Comment by Sergei Eensalu: set userId to subject
                 .claim("email", email)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + expirationMs))
@@ -37,7 +40,7 @@ public class JwtProvider {
                     .parseClaimsJws(token)
                     .getBody();
 
-            return claims.getSubject(); // userId
+            return claims.getSubject(); // Comment by Sergei Eensalu: get userId from subject
         } catch (ExpiredJwtException e) {
             throw new RuntimeException("Token expired");
         } catch (JwtException e) {
