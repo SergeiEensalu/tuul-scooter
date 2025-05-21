@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -16,6 +18,9 @@ public class User {
     private String email;
     private String passwordHash;
     private String name;
+
+    private Date createdAt;
+    private Date updatedAt;
 
     public static User from(String id, UserRow row) {
         return User.builder()

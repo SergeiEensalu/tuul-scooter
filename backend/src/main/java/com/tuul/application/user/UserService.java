@@ -30,7 +30,11 @@ public class UserService {
 
         String password = encoder.encode(command.password()); // Comment by SERGEI EENSALU: next layer should know nothing about logic, and only store data. So lets encode password in service tier.
 
-        UserRow userRow = new UserRow(command.email(), password, command.name());
+        UserRow userRow = UserRow.builder()
+                .email(command.email())
+                .passwordHash(password)
+                .name(command.name())
+                .build();
 
         return userRepository.save(userRow);
     }
