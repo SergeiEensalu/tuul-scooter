@@ -9,7 +9,6 @@ import java.util.Date;
 @Data
 @Builder
 public class Reservation {
-    @Exclude
     private String id;
 
     private String userId;

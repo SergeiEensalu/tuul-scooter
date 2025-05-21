@@ -2,6 +2,7 @@ package com.tuul.infrastructure.firestore;
 
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.DocumentReference;
+import com.google.cloud.firestore.DocumentSnapshot;
 import com.google.cloud.firestore.Firestore;
 import com.google.cloud.firestore.QuerySnapshot;
 import com.tuul.domain.model.user.User;
@@ -39,8 +40,17 @@ public class FirestoreUserRepository implements UserRepository {
                     .get()
                     .get();
 
-            if (snapshot.isEmpty()) return null;
-            return snapshot.getDocuments().get(0).toObject(User.class);
+            if (snapshot.isEmpty()) {
+                return null;
+            };
+
+            DocumentSnapshot document = snapshot.getDocuments().get(0);
+
+            User user = document.toObject(User.class);
+
+            user.setId(document.getId());
+
+            return user;
         } catch (Exception e) {
             throw new RuntimeException("Failed to query Firestore", e);
         }
