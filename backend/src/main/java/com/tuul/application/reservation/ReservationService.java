@@ -1,10 +1,13 @@
 package com.tuul.application.reservation;
 
 import com.tuul.application.reservation.dto.CreateReservationCommand;
+import com.tuul.domain.exception.AppException;
 import com.tuul.domain.model.reservation.Reservation;
 import com.tuul.domain.model.reservation.ReservationRow;
 import com.tuul.repository.ReservationRepository;
+import com.tuul.repository.VehicleRepository;
 import org.springframework.stereotype.Service;
+import com.tuul.domain.exception.ErrorCode;
 
 import java.time.Duration;
 import java.util.Date;
@@ -13,12 +16,19 @@ import java.util.Date;
 public class ReservationService {
 
     private final ReservationRepository reservationRepository;
+    private final VehicleRepository vehicleRepository;
 
-    public ReservationService(ReservationRepository reservationRepository) {
+    public ReservationService(ReservationRepository reservationRepository, VehicleRepository vehicleRepository) {
         this.reservationRepository = reservationRepository;
+        this.vehicleRepository = vehicleRepository;
+
     }
 
     public Reservation createReservation(CreateReservationCommand command) {
+        if (!vehicleRepository.existsById(command.vehicleId())) {
+            throw new AppException(ErrorCode.VEHICLE_NOT_FOUND, "Vehicle not found with ID: " + command.vehicleId());
+        }
+
         long durationMillis = Duration.between(command.startTime(), command.endTime()).toMillis();
         long durationMinutes = (long) Math.ceil(durationMillis / 60000.0);
 

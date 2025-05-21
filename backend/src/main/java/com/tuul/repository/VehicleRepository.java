@@ -5,4 +5,5 @@ import com.tuul.domain.model.vehicle.VehicleRow;
 
 public interface VehicleRepository {
     Vehicle save(VehicleRow row);
+    boolean existsById(String id);
 }

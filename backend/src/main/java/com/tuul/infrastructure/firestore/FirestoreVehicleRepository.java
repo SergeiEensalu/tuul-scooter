@@ -1,6 +1,7 @@
 package com.tuul.infrastructure.firestore;
 
 import com.google.cloud.firestore.DocumentReference;
+import com.google.cloud.firestore.DocumentSnapshot;
 import com.google.cloud.firestore.Firestore;
 import com.tuul.domain.model.vehicle.Vehicle;
 import com.tuul.domain.model.vehicle.VehicleRow;
@@ -26,6 +27,20 @@ public class FirestoreVehicleRepository implements VehicleRepository {
             return Vehicle.from(ref.getId(), row);
         } catch (Exception e) {
             throw new RuntimeException("Failed to save vehicle", e);
+        }
+    }
+
+    @Override
+    public boolean existsById(String id) {
+        try {
+            DocumentSnapshot snapshot = firestore.collection(FirestoreCollections.VEHICLES)
+                    .document(id)
+                    .get()
+                    .get();
+
+            return snapshot.exists();
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to check vehicle existence", e);
         }
     }
 }

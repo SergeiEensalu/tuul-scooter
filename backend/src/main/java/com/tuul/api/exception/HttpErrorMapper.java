@@ -12,6 +12,7 @@ public class HttpErrorMapper {
             case USER_ALREADY_EXISTS -> HttpStatus.CONFLICT;
             case INVALID_CREDENTIALS -> HttpStatus.UNAUTHORIZED;
             case VALIDATION_ERROR -> HttpStatus.BAD_REQUEST;
+            case VEHICLE_NOT_FOUND -> HttpStatus.NOT_FOUND;
             default -> HttpStatus.INTERNAL_SERVER_ERROR;
         };
     }
