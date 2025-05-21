@@ -25,12 +25,7 @@ public class FirestoreUserRepository implements UserRepository {
             ApiFuture<DocumentReference> future = firestore.collection(FirestoreCollections.USERS).add(userRow);
             DocumentReference ref = future.get();
 
-            return User.builder()
-                    .id(ref.getId())
-                    .email(userRow.getEmail())
-                    .name(userRow.getName())
-                    .passwordHash(userRow.getPasswordHash())
-                    .build();
+            return User.from(ref.getId(), userRow);
         } catch (Exception e) {
             throw new RuntimeException("Failed to save user", e);
         }

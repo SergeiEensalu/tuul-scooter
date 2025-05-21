@@ -1,18 +1,30 @@
 package com.tuul.domain.model.user;
 
+import com.google.cloud.firestore.annotation.Exclude;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class User extends UserRow {
+@AllArgsConstructor
+@Builder
+public class User {
 
+    @Exclude
     private String id;
 
-    @Builder
-    public User(String id, String email, String passwordHash, String name) {
-        super(email, passwordHash, name);
-        this.id = id;
+    private String email;
+    private String passwordHash;
+    private String name;
+
+    public static User from(String id, UserRow row) {
+        return User.builder()
+                .id(id)
+                .email(row.getEmail())
+                .name(row.getName())
+                .passwordHash(row.getPasswordHash())
+                .build();
     }
 }

@@ -9,19 +9,34 @@ import java.util.Date;
 @Data
 @Builder
 public class Reservation {
-
     @Exclude
     private String id;
+
     private String userId;
     private String vehicleId;
 
     private Date startTime;
     private Date endTime;
 
-    private Double startLat;
-    private Double startLng;
-    private Double endLat;
-    private Double endLng;
+    private double startLat;
+    private double startLng;
+    private double endLat;
+    private double endLng;
 
     private double cost;
+
+    public static Reservation from(String id, ReservationRow row) {
+        return Reservation.builder()
+                .id(id)
+                .userId(row.getUserId())
+                .vehicleId(row.getVehicleId())
+                .startTime(row.getStartTime())
+                .endTime(row.getEndTime())
+                .startLat(row.getStartLat())
+                .startLng(row.getStartLng())
+                .endLat(row.getEndLat())
+                .endLng(row.getEndLng())
+                .cost(row.getCost())
+                .build();
+    }
 }

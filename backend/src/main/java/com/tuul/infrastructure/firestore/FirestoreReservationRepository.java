@@ -25,19 +25,7 @@ public class FirestoreReservationRepository implements ReservationRepository {
             ApiFuture<DocumentReference> future = firestore.collection(FirestoreCollections.RESERVATIONS).add(reservationRow);
             DocumentReference ref = future.get();
 
-            return Reservation.builder()
-                    .id(ref.getId())
-                    .userId(reservationRow.getUserId())
-                    .vehicleId(reservationRow.getVehicleId())
-                    .startTime(reservationRow.getStartTime())
-                    .endTime(reservationRow.getEndTime())
-                    .startLat(reservationRow.getStartLat())
-                    .startLng(reservationRow.getStartLng())
-                    .endLat(reservationRow.getEndLat())
-                    .endLng(reservationRow.getEndLng())
-                    .cost(reservationRow.getCost())
-                    .build();
-
+            return Reservation.from(ref.getId(), reservationRow);
         } catch (InterruptedException | ExecutionException e) {
             throw new RuntimeException("Failed to save reservation", e);
         }
