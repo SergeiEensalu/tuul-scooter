@@ -14,7 +14,6 @@ import org.springframework.stereotype.Repository;
 public class FirestoreUserRepository implements UserRepository {
 
     private final Firestore firestore;
-    private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
     public FirestoreUserRepository(Firestore firestore) {
         this.firestore = firestore;
@@ -23,7 +22,7 @@ public class FirestoreUserRepository implements UserRepository {
     @Override
     public User save(String name, String email, String password) {
         try {
-            UserRow userRow = new UserRow(email, encoder.encode(password), name);
+            UserRow userRow = new UserRow(email, password, name);
 
             ApiFuture<DocumentReference> future = firestore.collection("users").add(userRow);
             DocumentReference ref = future.get();

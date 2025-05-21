@@ -27,7 +27,9 @@ public class UserService {
             throw new AppException(ErrorCode.USER_ALREADY_EXISTS, "User already exists");
         }
 
-        return userRepository.save(command.name(), command.email(), command.password());
+        String password = encoder.encode(command.password()); // Comment by SERGEI EENSALU: next layer should know nothing about logic, and only store data. So lets encode password in service tier.
+
+        return userRepository.save(command.name(), command.email(), password);
     }
 
     public String login(GetUserCommand command) {
