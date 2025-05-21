@@ -41,7 +41,8 @@ public class ReservationController {
                 request.endLongitude()
         );
 
-        var createdReservation = reservationService.createReservation(command); // Comment by SERGEI EENSALU: Var to prevent import Reservation from Domain/Service layer.
+        // Comment by SERGEI EENSALU: Var to prevent import Reservation from Domain/Service layer.
+        var createdReservation = reservationService.createReservation(command);
 
         return ResponseEntity.ok(
                 ApiResponse.success(

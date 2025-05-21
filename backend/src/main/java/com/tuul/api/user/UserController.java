@@ -26,7 +26,8 @@ public class UserController {
     public ResponseEntity<ApiResponse<UserRegisterResponse>> register(@Valid @RequestBody UserRegisterRequest request) {
         CreateUserCommand command = new CreateUserCommand(request.name(), request.email(), request.password());
 
-        var createdUser = userService.register(command); // Comment by SERGEI EENSALU: Var to prevent import User from Domain/Service layer.
+        // Comment by SERGEI EENSALU: Var to prevent import User from Domain/Service layer.
+        var createdUser = userService.register(command);
 
         return ResponseEntity.ok(
                 ApiResponse.success(
