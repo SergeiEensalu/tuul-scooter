@@ -32,6 +32,7 @@ public class ReservationService {
         long durationMillis = Duration.between(command.startTime(), command.endTime()).toMillis();
         long durationMinutes = (long) Math.ceil(durationMillis / 60000.0);
 
+        // Comment by Sergei Eensalu: probably exist better place for formula definition. But lets left it here.
         double cost = 1.0 + Math.min(durationMinutes, 10) * 0.5 + Math.max(0, durationMinutes - 10) * 0.3;
 
         ReservationRow reservationRow = ReservationRow.builder()
