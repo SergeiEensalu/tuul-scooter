@@ -7,6 +7,7 @@ import com.tuul.api.user.dto.UserRegisterRequest;
 import com.tuul.api.user.dto.UserRegisterResponse;
 import com.tuul.application.user.UserService;
 import com.tuul.application.user.dto.CreateUserCommand;
+import com.tuul.application.user.dto.GetUserCommand;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -33,7 +34,9 @@ public class UserController {
 
     @PostMapping("/login")
     public ResponseEntity<ApiResponse<UserLoginResponse>> login(@Valid @RequestBody UserLoginRequest request) {
-        String token = userService.login(request.email(), request.password());
+        GetUserCommand command = new GetUserCommand(request.email(), request.password());
+
+        String token = userService.login(command);
         return ResponseEntity.ok(
                 ApiResponse.success("Login successful", new UserLoginResponse(token))
         );

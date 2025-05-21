@@ -1,6 +1,7 @@
 package com.tuul.application.user;
 
 import com.tuul.application.user.dto.CreateUserCommand;
+import com.tuul.application.user.dto.GetUserCommand;
 import com.tuul.domain.exception.ErrorCode;
 import com.tuul.domain.model.user.User;
 import com.tuul.domain.exception.AppException;
@@ -29,9 +30,9 @@ public class UserService {
         return userRepository.save(command.name(), command.email(), command.password());
     }
 
-    public String login(String email, String rawPassword) {
-        User existingUser = userRepository.findByEmail(email);
-        if (existingUser == null || !encoder.matches(rawPassword, existingUser.getPasswordHash())) {
+    public String login(GetUserCommand command) {
+        User existingUser = userRepository.findByEmail(command.email());
+        if (existingUser == null || !encoder.matches(command.rawPassword(), existingUser.getPasswordHash())) {
             throw new AppException(ErrorCode.INVALID_CREDENTIALS, "Invalid credentials");
         }
 
