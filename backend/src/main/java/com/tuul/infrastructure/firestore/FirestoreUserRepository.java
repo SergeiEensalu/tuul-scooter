@@ -23,11 +23,7 @@ public class FirestoreUserRepository implements UserRepository {
     @Override
     public User save(String name, String email, String password) {
         try {
-            UserRow userRow = UserRow.builder()
-                    .email(email)
-                    .name(name)
-                    .passwordHash(encoder.encode(password))
-                    .build();
+            UserRow userRow = new UserRow(email, encoder.encode(password), name);
 
             ApiFuture<DocumentReference> future = firestore.collection("users").add(userRow);
             DocumentReference ref = future.get();

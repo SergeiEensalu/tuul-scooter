@@ -5,7 +5,7 @@ import com.tuul.api.common.dto.ApiResponse;
 import com.tuul.api.user.dto.UserLoginResponse;
 import com.tuul.api.user.dto.UserRegisterRequest;
 import com.tuul.api.user.dto.UserRegisterResponse;
-import com.tuul.application.UserService;
+import com.tuul.application.user.UserService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

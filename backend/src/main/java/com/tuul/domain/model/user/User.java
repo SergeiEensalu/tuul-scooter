@@ -1,17 +1,18 @@
 package com.tuul.domain.model.user;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@Builder
 @NoArgsConstructor
-@AllArgsConstructor
-public class User {
+public class User extends UserRow {
+
     private String id;
-    private String email;
-    private String passwordHash;
-    private String name;
+
+    @Builder
+    public User(String id, String email, String passwordHash, String name) {
+        super(email, passwordHash, name);
+        this.id = id;
+    }
 }
