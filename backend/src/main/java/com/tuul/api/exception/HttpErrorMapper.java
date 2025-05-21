@@ -9,7 +9,7 @@ public class HttpErrorMapper {
 
     public static HttpStatus mapToHttpStatus(ErrorCode code) {
         return switch (code) {
-            case USER_ALREADY_EXISTS -> HttpStatus.CONFLICT;
+            case USER_ALREADY_EXISTS, VEHICLE_ALREADY_RESERVED -> HttpStatus.CONFLICT;
             case INVALID_CREDENTIALS -> HttpStatus.UNAUTHORIZED;
             case VALIDATION_ERROR -> HttpStatus.BAD_REQUEST;
             case VEHICLE_NOT_FOUND -> HttpStatus.NOT_FOUND;

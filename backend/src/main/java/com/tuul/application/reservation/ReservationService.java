@@ -29,6 +29,15 @@ public class ReservationService {
             throw new AppException(ErrorCode.VEHICLE_NOT_FOUND, "Vehicle not found with ID: " + command.vehicleId());
         }
 
+        if (reservationRepository.isVehicleReservedBetween(
+                command.vehicleId(),
+                Date.from(command.startTime()),
+                Date.from(command.endTime())
+        )) {
+            throw new AppException(ErrorCode.VEHICLE_ALREADY_RESERVED,
+                    "Vehicle is already reserved during the selected period");
+        }
+
         long durationMillis = Duration.between(command.startTime(), command.endTime()).toMillis();
         long durationMinutes = (long) Math.ceil(durationMillis / 60000.0);
 
