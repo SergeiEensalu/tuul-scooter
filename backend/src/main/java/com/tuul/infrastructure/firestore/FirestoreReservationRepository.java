@@ -1,11 +1,13 @@
 package com.tuul.infrastructure.firestore;
 
+import com.google.api.core.ApiFuture;
+import com.google.cloud.firestore.DocumentReference;
 import com.google.cloud.firestore.Firestore;
 import com.tuul.domain.model.Reservation;
 import com.tuul.repository.ReservationRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.UUID;
+import java.util.concurrent.ExecutionException;
 
 @Repository
 public class FirestoreReservationRepository implements ReservationRepository {
@@ -18,7 +20,12 @@ public class FirestoreReservationRepository implements ReservationRepository {
 
     @Override
     public void save(Reservation reservation) {
-        String id = reservation.getId() != null ? reservation.getId() : UUID.randomUUID().toString();
-        firestore.collection("reservations").document(id).set(reservation);
+        try {
+            ApiFuture<DocumentReference> future = firestore.collection("reservations").add(reservation);
+            DocumentReference ref = future.get();
+            reservation.setId(ref.getId());
+        } catch (InterruptedException | ExecutionException e) {
+            throw new RuntimeException("Failed to save reservation", e);
+        }
     }
 }

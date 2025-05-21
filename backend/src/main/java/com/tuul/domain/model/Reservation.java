@@ -1,19 +1,22 @@
 package com.tuul.domain.model;
 
+import com.google.cloud.firestore.annotation.Exclude;
 import lombok.Builder;
 import lombok.Data;
 
-import java.time.Instant;
+import java.util.Date;
 
 @Data
 @Builder
 public class Reservation {
+
+    @Exclude
     private String id;
     private String userId;
     private String vehicleId;
 
-    private Instant startTime;
-    private Instant endTime;
+    private Date startTime;
+    private Date endTime;
 
     private Double startLat;
     private Double startLng;

@@ -6,6 +6,7 @@ import com.tuul.repository.ReservationRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
+import java.util.Date;
 
 @Service
 public class ReservationService {
@@ -16,7 +17,7 @@ public class ReservationService {
         this.reservationRepository = reservationRepository;
     }
 
-    public void createReservation(CreateReservationCommand command) {
+    public Reservation createReservation(CreateReservationCommand command) {
         long durationMillis = Duration.between(command.startTime(), command.endTime()).toMillis();
         long durationMinutes = (long) Math.ceil(durationMillis / 60000.0);
 
@@ -25,8 +26,8 @@ public class ReservationService {
         Reservation reservation = Reservation.builder()
                 .userId(command.userId())
                 .vehicleId(command.vehicleId())
-                .startTime(command.startTime())
-                .endTime(command.endTime())
+                .startTime(Date.from(command.startTime()))
+                .endTime(Date.from(command.endTime()))
                 .startLat(command.startLat())
                 .startLng(command.startLng())
                 .endLat(command.endLat())
@@ -35,5 +36,6 @@ public class ReservationService {
                 .build();
 
         reservationRepository.save(reservation);
+        return reservation;
     }
 }

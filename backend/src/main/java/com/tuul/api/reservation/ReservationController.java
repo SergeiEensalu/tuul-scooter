@@ -2,6 +2,7 @@ package com.tuul.api.reservation;
 
 import com.tuul.api.common.dto.ApiResponse;
 import com.tuul.api.reservation.dto.ReservationRequest;
+import com.tuul.api.reservation.dto.ReservationResponse;
 import com.tuul.application.reservation.ReservationService;
 import com.tuul.application.reservation.dto.CreateReservationCommand;
 import com.tuul.security.JwtProvider;
@@ -26,8 +27,8 @@ public class ReservationController {
     }
 
     @PostMapping
-    public ResponseEntity<ApiResponse<Void>> reserve(@Valid @RequestBody ReservationRequest request,
-                                                     @RequestHeader("Authorization") String token) {
+    public ResponseEntity<ApiResponse<ReservationResponse>> reserve(@Valid @RequestBody ReservationRequest request,
+                                                                    @RequestHeader("Authorization") String token) {
         String userId = jwtProvider.validateAndExtractUserId(token.replace("Bearer ", ""));
         CreateReservationCommand command = new CreateReservationCommand(
                 userId,
@@ -40,7 +41,7 @@ public class ReservationController {
                 request.endLongitude()
         );
 
-        reservationService.createReservation(command);
-        return ResponseEntity.ok(ApiResponse.success("Reservation created"));
+        var createdReservation = reservationService.createReservation(command);
+        return ResponseEntity.ok(ApiResponse.success("Reservation created", ReservationResponse.from(createdReservation)));
     }
 }
