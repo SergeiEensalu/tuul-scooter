@@ -21,7 +21,7 @@ public class FirestoreReservationRepository implements ReservationRepository {
     @Override
     public Reservation save(Reservation reservation) {
         try {
-            ApiFuture<DocumentReference> future = firestore.collection("reservations").add(reservation);
+            ApiFuture<DocumentReference> future = firestore.collection(FirestoreCollections.RESERVATIONS).add(reservation);
             DocumentReference ref = future.get();
             reservation.setId(ref.getId());
             return reservation;

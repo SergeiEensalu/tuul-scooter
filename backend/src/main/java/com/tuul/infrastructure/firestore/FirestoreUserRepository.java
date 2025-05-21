@@ -24,7 +24,7 @@ public class FirestoreUserRepository implements UserRepository {
         try {
             UserRow userRow = new UserRow(email, password, name);
 
-            ApiFuture<DocumentReference> future = firestore.collection("users").add(userRow);
+            ApiFuture<DocumentReference> future = firestore.collection(FirestoreCollections.USERS).add(userRow);
             DocumentReference ref = future.get();
 
             return User.builder()
@@ -41,7 +41,7 @@ public class FirestoreUserRepository implements UserRepository {
     @Override
     public User findByEmail(String email) {
         try {
-            QuerySnapshot snapshot = firestore.collection("users")
+            QuerySnapshot snapshot = firestore.collection(FirestoreCollections.USERS)
                     .whereEqualTo("email", email)
                     .get()
                     .get();
