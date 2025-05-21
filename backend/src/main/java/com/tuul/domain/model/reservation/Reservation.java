@@ -39,6 +39,8 @@ public class Reservation {
                 .endLat(row.getEndLat())
                 .endLng(row.getEndLng())
                 .cost(row.getCost())
+                .createdAt(row.getCreatedAt())
+                .updatedAt(row.getUpdatedAt())
                 .build();
     }
 }

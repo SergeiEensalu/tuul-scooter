@@ -26,6 +26,8 @@ public class User {
                 .email(row.getEmail())
                 .name(row.getName())
                 .passwordHash(row.getPasswordHash())
+                .createdAt(row.getCreatedAt())
+                .updatedAt(row.getUpdatedAt())
                 .build();
     }
 }

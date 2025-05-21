@@ -8,6 +8,8 @@ import com.tuul.domain.model.vehicle.VehicleRow;
 import com.tuul.repository.VehicleRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public class FirestoreVehicleRepository implements VehicleRepository {
 
@@ -41,6 +43,28 @@ public class FirestoreVehicleRepository implements VehicleRepository {
             return snapshot.exists();
         } catch (Exception e) {
             throw new RuntimeException("Failed to check vehicle existence", e);
+        }
+    }
+
+    @Override
+    public List<Vehicle> findAll() {
+        try {
+            return firestore.collection(FirestoreCollections.VEHICLES)
+                    .get()
+                    .get()
+                    .getDocuments()
+                    .stream()
+                    .map(doc -> {
+                        System.out.println("AAAAAa");
+                        System.out.println(doc);
+                        VehicleRow row = doc.toObject(VehicleRow.class);
+                        System.out.println(row);
+
+                        return Vehicle.from(doc.getId(), row);
+                    })
+                    .toList();
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to fetch vehicles", e);
         }
     }
 }

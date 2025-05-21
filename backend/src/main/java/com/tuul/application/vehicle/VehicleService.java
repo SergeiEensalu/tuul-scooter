@@ -6,6 +6,8 @@ import com.tuul.domain.model.vehicle.VehicleRow;
 import com.tuul.repository.VehicleRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class VehicleService {
 
@@ -22,5 +24,9 @@ public class VehicleService {
                 .build();
 
         return vehicleRepository.save(row);
+    }
+
+    public List<Vehicle> findAll() {
+        return vehicleRepository.findAll();
     }
 }

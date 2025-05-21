@@ -20,6 +20,8 @@ public class Vehicle {
                 .id(id)
                 .model(row.getModel())
                 .location(row.getLocation())
+                .createdAt(row.getCreatedAt())
+                .updatedAt(row.getUpdatedAt())
                 .build();
     }
 }
