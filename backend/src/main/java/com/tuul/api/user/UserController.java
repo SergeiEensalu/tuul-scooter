@@ -22,9 +22,9 @@ public class UserController {
 
     @PostMapping("/register")
     public ResponseEntity<ApiResponse<UserRegisterResponse>> register(@Valid @RequestBody UserRegisterRequest request) {
-        userService.register(request.name(), request.email(), request.password());
+        var createdUser = userService.register(request.name(), request.email(), request.password());
         return ResponseEntity.ok(
-                ApiResponse.success("User registered", new UserRegisterResponse())
+                ApiResponse.success("User registered", new UserRegisterResponse(createdUser.getId(), createdUser.getEmail()))
         );
     }
 

@@ -35,7 +35,6 @@ public class ReservationService {
                 .cost(cost)
                 .build();
 
-        reservationRepository.save(reservation);
-        return reservation;
+        return reservationRepository.save(reservation);
     }
 }

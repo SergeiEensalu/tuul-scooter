@@ -1,14 +1,13 @@
 package com.tuul.application;
 
 import com.tuul.domain.exception.ErrorCode;
-import com.tuul.domain.model.User;
+import com.tuul.domain.model.user.User;
 import com.tuul.domain.exception.AppException;
+import com.tuul.domain.model.user.UserRow;
 import com.tuul.repository.UserRepository;
 import com.tuul.security.JwtProvider;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.util.UUID;
 
 @Service
 public class UserService {
@@ -22,18 +21,12 @@ public class UserService {
         this.jwtProvider = jwtProvider;
     }
 
-    public void register(String name, String email, String password) {
+    public User register(String name, String email, String password) {
         if (userRepository.findByEmail(email) != null) {
             throw new AppException(ErrorCode.USER_ALREADY_EXISTS, "User already exists");
         }
 
-        User user = new User();
-        user.setId(UUID.randomUUID().toString());
-        user.setName(name);
-        user.setEmail(email);
-        user.setPasswordHash(encoder.encode(password));
-
-        userRepository.save(user);
+        return userRepository.save(name, email, password);
     }
 
     public String login(String email, String rawPassword) {

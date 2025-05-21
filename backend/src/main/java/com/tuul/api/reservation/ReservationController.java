@@ -41,7 +41,7 @@ public class ReservationController {
                 request.endLongitude()
         );
 
-        var createdReservation = reservationService.createReservation(command);
+        var createdReservation = reservationService.createReservation(command); // TODO BY SERGEI EENSALU: Var?
         return ResponseEntity.ok(ApiResponse.success("Reservation created", ReservationResponse.from(createdReservation)));
     }
 }

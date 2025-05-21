@@ -1,23 +1,46 @@
 package com.tuul.infrastructure.firestore;
 
+import com.google.api.core.ApiFuture;
+import com.google.cloud.firestore.DocumentReference;
 import com.google.cloud.firestore.Firestore;
 import com.google.cloud.firestore.QuerySnapshot;
-import com.tuul.domain.model.User;
+import com.tuul.domain.model.user.User;
+import com.tuul.domain.model.user.UserRow;
 import com.tuul.repository.UserRepository;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public class FirestoreUserRepository implements UserRepository {
 
     private final Firestore firestore;
+    private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
     public FirestoreUserRepository(Firestore firestore) {
         this.firestore = firestore;
     }
 
     @Override
-    public void save(User user) {
-        firestore.collection("users").document(user.getId()).set(user);
+    public User save(String name, String email, String password) {
+        try {
+            UserRow userRow = UserRow.builder()
+                    .email(email)
+                    .name(name)
+                    .passwordHash(encoder.encode(password))
+                    .build();
+
+            ApiFuture<DocumentReference> future = firestore.collection("users").add(userRow);
+            DocumentReference ref = future.get();
+
+            return User.builder()
+                    .id(ref.getId())
+                    .email(userRow.getEmail())
+                    .name(userRow.getName())
+                    .passwordHash(userRow.getPasswordHash())
+                    .build();
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to save user", e);
+        }
     }
 
     @Override

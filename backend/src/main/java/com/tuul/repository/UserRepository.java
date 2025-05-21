@@ -1,9 +1,9 @@
 package com.tuul.repository;
 
-import com.tuul.domain.model.User;
+import com.tuul.domain.model.user.User;
 
 public interface UserRepository {
-    void save(User user);
+    User save(String name, String email, String password);
 
     User findByEmail(String email);
 }

@@ -19,11 +19,12 @@ public class FirestoreReservationRepository implements ReservationRepository {
     }
 
     @Override
-    public void save(Reservation reservation) {
+    public Reservation save(Reservation reservation) {
         try {
             ApiFuture<DocumentReference> future = firestore.collection("reservations").add(reservation);
             DocumentReference ref = future.get();
             reservation.setId(ref.getId());
+            return reservation;
         } catch (InterruptedException | ExecutionException e) {
             throw new RuntimeException("Failed to save reservation", e);
         }
