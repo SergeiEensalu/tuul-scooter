@@ -55,8 +55,6 @@ public class FirestoreVehicleRepository implements VehicleRepository {
                     .getDocuments()
                     .stream()
                     .map(doc -> {
-                        System.out.println("AAAAAa");
-                        System.out.println(doc);
                         VehicleRow row = doc.toObject(VehicleRow.class);
                         System.out.println(row);
 
