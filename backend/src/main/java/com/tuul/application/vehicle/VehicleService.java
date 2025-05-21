@@ -16,7 +16,11 @@ public class VehicleService {
     }
 
     public Vehicle create(CreateVehicleCommand command) {
-        VehicleRow row = new VehicleRow(command.model(), command.location());
+        VehicleRow row = VehicleRow.builder()
+                .model(command.model())
+                .location(command.location())
+                .build();
+
         return vehicleRepository.save(row);
     }
 }
