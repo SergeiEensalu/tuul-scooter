@@ -1,6 +1,5 @@
 package com.tuul.domain.model.reservation;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 
@@ -8,7 +7,6 @@ import java.util.Date;
 
 @Data
 @Builder
-@AllArgsConstructor
 public class ReservationRow {
     private String userId;
     private String vehicleId;
@@ -22,4 +20,10 @@ public class ReservationRow {
     private double endLng;
 
     private double cost;
+
+    @Builder.Default
+    private Date createdAt = new Date();
+
+    @Builder.Default
+    private Date updatedAt = new Date();
 }

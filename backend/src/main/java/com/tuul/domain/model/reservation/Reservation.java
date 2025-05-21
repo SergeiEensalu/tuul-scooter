@@ -24,6 +24,9 @@ public class Reservation {
 
     private double cost;
 
+    private Date createdAt;
+    private Date updatedAt;
+
     public static Reservation from(String id, ReservationRow row) {
         return Reservation.builder()
                 .id(id)
