@@ -37,11 +37,9 @@ public class JwtFilter extends OncePerRequestFilter {
 
         String token = authHeader.substring(7);
         String userId;
-        String email;
         try {
             Claims claims = jwtProvider.getClaims(token);
             userId = claims.getSubject();
-            email = claims.get("email", String.class);
         } catch (Exception e) {
             filterChain.doFilter(request, response);
             return;
@@ -49,7 +47,7 @@ public class JwtFilter extends OncePerRequestFilter {
 
         UsernamePasswordAuthenticationToken authToken =
                 new UsernamePasswordAuthenticationToken(
-                        userId, // or email if preferred
+                        userId,
                         null,
                         List.of(new SimpleGrantedAuthority("ROLE_USER"))
                 );

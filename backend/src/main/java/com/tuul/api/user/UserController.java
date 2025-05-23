@@ -12,6 +12,10 @@ import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
+@Tag(name = "Users", description = "User registration and authentication")
 @RestController
 @RequestMapping("/v1/users")
 public class UserController {
@@ -22,6 +26,10 @@ public class UserController {
         this.userService = userService;
     }
 
+    @Operation(
+            summary = "Register a new user",
+            description = "Creates a new user account with name, email, and password"
+    )
     @PostMapping("/register")
     public ResponseEntity<ApiResponse<UserRegisterResponse>> register(@Valid @RequestBody UserRegisterRequest request) {
         CreateUserCommand command = new CreateUserCommand(request.name(), request.email(), request.password());
@@ -37,6 +45,10 @@ public class UserController {
         );
     }
 
+    @Operation(
+            summary = "User login",
+            description = "Authenticates user and returns a JWT token"
+    )
     @PostMapping("/login")
     public ResponseEntity<ApiResponse<UserLoginResponse>> login(@Valid @RequestBody UserLoginRequest request) {
         GetUserCommand command = new GetUserCommand(request.email(), request.password());

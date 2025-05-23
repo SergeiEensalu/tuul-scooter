@@ -14,6 +14,11 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+
+@Tag(name = "Reservations", description = "Endpoints for scooter reservations")
 @RestController
 @RequestMapping("/v1/reservations")
 public class ReservationController {
@@ -26,6 +31,11 @@ public class ReservationController {
         this.jwtProvider = jwtProvider;
     }
 
+    @Operation(
+            summary = "Create a reservation",
+            description = "Creates a new scooter reservation for a logged-in user",
+            security = @SecurityRequirement(name = "bearerAuth")
+    )
     @PostMapping
     public ResponseEntity<ApiResponse<ReservationResponse>> reserve(@Valid @RequestBody ReservationRequest request,
                                                                     @RequestHeader("Authorization") String token) {

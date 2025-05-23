@@ -24,7 +24,7 @@ public class UserService {
     }
 
     public User register(CreateUserCommand command) {
-        if (userRepository.findByEmail(command.email()) != null) {
+        if (userRepository.findByEmail(command.email()).isPresent()) {
             throw new AppException(ErrorCode.USER_ALREADY_EXISTS, "User already exists");
         }
 
@@ -40,8 +40,10 @@ public class UserService {
     }
 
     public String login(GetUserCommand command) {
-        User existingUser = userRepository.findByEmail(command.email());
-        if (existingUser == null || !encoder.matches(command.rawPassword(), existingUser.getPasswordHash())) {
+        User existingUser = userRepository.findByEmail(command.email())
+                .orElseThrow(() -> new AppException(ErrorCode.INVALID_CREDENTIALS, "Invalid credentials"));
+
+        if (!encoder.matches(command.rawPassword(), existingUser.getPasswordHash())) {
             throw new AppException(ErrorCode.INVALID_CREDENTIALS, "Invalid credentials");
         }
 

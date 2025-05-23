@@ -10,8 +10,13 @@ import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+
 import java.util.List;
 
+@Tag(name = "Vehicles", description = "Vehicle management endpoints")
 @RestController
 @RequestMapping("/v1/vehicles")
 public class VehicleController {
@@ -22,6 +27,11 @@ public class VehicleController {
         this.vehicleService = vehicleService;
     }
 
+    @Operation(
+            summary = "Create a vehicle",
+            description = "Creates a new vehicle with model and location",
+            security = @SecurityRequirement(name = "bearerAuth")
+    )
     @PostMapping
     public ResponseEntity<ApiResponse<CreateVehicleResponse>> createVehicle(@Valid @RequestBody CreateVehicleRequest request) {
         CreateVehicleCommand command = new CreateVehicleCommand(request.model(), request.location());
@@ -32,6 +42,11 @@ public class VehicleController {
         );
     }
 
+    @Operation(
+            summary = "Get all vehicles",
+            description = "Returns a list of all available vehicles",
+            security = @SecurityRequirement(name = "bearerAuth")
+    )
     @GetMapping
     public ResponseEntity<ApiResponse<List<GetVehicleResponse>>> getAllVehicles() {
         List<GetVehicleResponse> vehicles = vehicleService.findAll().stream()
