@@ -23,4 +23,5 @@
 hs_err_pid*
 replay_pid*
 /.idea/
-/backend/serviceAccountKey.json
+/backend/src/main/resources/application.yml
+.env
