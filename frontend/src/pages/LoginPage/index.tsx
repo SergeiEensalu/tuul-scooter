@@ -21,9 +21,6 @@ export const LoginPage: React.FC = () => {
 
   return (
     <form onSubmit={handleLogin} className="p-4 space-y-4 max-w-sm mx-auto">
-      <div className="text-red-500 text-2xl">This is blue-600 text</div>
-      <div className="text-blue-400 text-2xl">This is blue-400 text</div>
-      <div className="text-sky-400 text-2xl">This is sky-400 text</div>
       <h1 className="text-xl font-bold">Login</h1>
       <input
         type="email"
