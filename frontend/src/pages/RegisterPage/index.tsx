@@ -1,21 +1,28 @@
 import React, {useState} from 'react';
-import {signInWithEmailAndPassword} from 'firebase/auth';
+import {createUserWithEmailAndPassword} from 'firebase/auth';
 import {auth} from '../../config/firebase';
 import {useNavigate, Link} from 'react-router-dom';
 import {Input} from '../../shared/ui/Input';
 import {Button} from '../../shared/ui/Button';
 import {FormError} from '../../shared/ui/FormError';
 
-export const LoginPage: React.FC = () => {
+export const RegisterPage: React.FC = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState<string | null>(null);
 
-  const handleLogin = async (e: React.FormEvent) => {
+  const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (password !== confirmPassword) {
+      setError('Passwords do not match');
+      return;
+    }
+
     try {
-      await signInWithEmailAndPassword(auth, email, password);
+      await createUserWithEmailAndPassword(auth, email, password);
       navigate('/');
     } catch (err: any) {
       // TODO BY SERGEI EENSALU: Error messages should be translated to human readable way
@@ -24,8 +31,8 @@ export const LoginPage: React.FC = () => {
   };
 
   return (
-    <form onSubmit={handleLogin} className="p-4 space-y-4 max-w-sm mx-auto">
-      <h1 className="text-xl font-bold">Login</h1>
+    <form onSubmit={handleRegister} className="p-4 space-y-4 max-w-sm mx-auto">
+      <h1 className="text-xl font-bold">Register</h1>
       <FormError message={error || ''}/>
 
       <Input
@@ -44,11 +51,19 @@ export const LoginPage: React.FC = () => {
         onChange={(e) => setPassword(e.target.value)}
         required
       />
-      <Button type="submit">Log in</Button>
+      <Input
+        type="password"
+        label="Confirm Password"
+        placeholder="••••••••"
+        value={confirmPassword}
+        onChange={(e) => setConfirmPassword(e.target.value)}
+        required
+      />
+      <Button type="submit">Create Account</Button>
       <p className="text-sm">
-        Don’t have an account?{' '}
-        <Link to="/register" className="text-blue-600 underline">
-          Sign up
+        Already have an account?{' '}
+        <Link to="/login" className="text-blue-600 underline">
+          Log in
         </Link>
       </p>
     </form>

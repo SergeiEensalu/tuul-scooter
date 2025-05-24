@@ -4,6 +4,7 @@ import {DashboardPage} from '../pages/DashboardPage';
 import {ProtectedRoute} from './ProtectedRoute';
 import {Layout} from '../shared/ui/Layout';
 import {NotFoundPage} from "../pages/NotFoundPage";
+import {RegisterPage} from "../pages/RegisterPage";
 
 export const routes: RouteObject[] = [
   {
@@ -22,6 +23,10 @@ export const routes: RouteObject[] = [
   {
     path: '/login',
     element: <LoginPage/>,
+  },
+  {
+    path: '/register',
+    element: <RegisterPage/>,
   },
   {path: '*', element: <NotFoundPage/>},
 ];
