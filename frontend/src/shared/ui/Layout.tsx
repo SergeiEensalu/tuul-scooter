@@ -3,7 +3,7 @@ import {Outlet} from 'react-router-dom';
 import {signOut} from 'firebase/auth';
 import {auth} from '../../config/firebase';
 import {useAuth} from "../hooks/useAuth";
-import { Button } from './Button';
+import {Button} from './Button';
 
 export const Layout: React.FC = () => {
   const {user} = useAuth();
