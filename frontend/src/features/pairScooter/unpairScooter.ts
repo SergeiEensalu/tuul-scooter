@@ -6,7 +6,7 @@ export const unpairScooter = async (vehicleId: string): Promise<ApiResult> => {
   const token = await auth.currentUser?.getIdToken();
 
   if (!token) {
-    throw Error(`Token not found.`);
+    return {success: false, message: 'User not authenticated'}
   }
 
   try {
