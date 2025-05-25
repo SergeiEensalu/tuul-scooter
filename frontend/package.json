@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "npm run prepare:env && vite",
+    "dev": "npm run prepare:env && cross-env VITE_USE_FIREBASE_MOCK=false vite",
     "build": "vite build",
     "lint": "eslint src --ext .ts,.tsx,.js,.jsx",
     "preview": "vite preview",
@@ -25,6 +25,7 @@
     "@typescript-eslint/parser": "^8.32.1",
     "@vitejs/plugin-react": "^4.4.1",
     "autoprefixer": "^10.4.21",
+    "cross-env": "^7.0.3",
     "eslint": "^8.56.0",
     "eslint-config-prettier": "^10.1.5",
     "eslint-flat-config": "^2.0.0",

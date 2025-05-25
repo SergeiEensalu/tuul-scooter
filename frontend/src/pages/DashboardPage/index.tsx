@@ -1,72 +1,85 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {Input} from '../../shared/ui/Input';
 import {Button} from '../../shared/ui/Button';
 import {FormError} from '../../shared/ui/FormError';
 import {pairScooter} from '../../features/pairScooter/pairScooter';
-import {getUserActiveVehicleId} from '../../entities/user/getUserActiveVehicle';
-import {getVehicleById} from '../../entities/vehicle/getVehicleById';
-import {auth} from '../../config/firebase';
+import {unpairScooter} from '../../features/pairScooter/unpairScooter';
+import {useVehicle} from "../../shared/hooks/useVehicle";
+import {parseApiError} from '../../shared/utils/parseApiError';
 
 export const DashboardPage: React.FC = () => {
-  const [vehicleId, setVehicleId] = useState<string | null>(null);
+  const {vehicleData, refresh} = useVehicle();
   const [vehicleCode, setVehicleCode] = useState('');
-  const [vehicleData, setVehicleData] = useState<any>(null);
   const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    (async () => {
-      const id = await getUserActiveVehicleId();
-
-      setVehicleId(id);
-      console.log("id", id)
-      if (id) {
-        const data = await getVehicleById(id);
-        setVehicleData(data);
-      }
-    })();
-  }, []);
-
-  const handlePair = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handlePair = async () => {
     setError(null);
-    try {
-      const token = await auth.currentUser?.getIdToken();
-      if (!token) {
-        throw new Error('User not authenticated')
-      }
-      await pairScooter(vehicleCode, token);
-      window.location.reload();
-    } catch (err: any) {
-      setError(err.message);
+    setLoading(true);
+    const result = await pairScooter(vehicleCode);
+    setLoading(false);
+
+    if (!result.success) {
+      setError(parseApiError(result));
+      return;
     }
+
+    refresh(); // refetch vehicle after pairing
   };
 
-  if (vehicleId && vehicleData) {
+  const handleUnpair = async () => {
+    if (!vehicleData?.id) return;
+    setError(null);
+    setLoading(true);
+    const result = await unpairScooter(vehicleData.id);
+    setLoading(false);
+
+    if (!result.success) {
+      setError(parseApiError(result));
+      return;
+    }
+
+    refresh(); // refetch after unpair
+  };
+
+  if (vehicleData) {
     return (
-      <div className="space-y-4">
+      <div className="p-4 space-y-4 max-w-sm mx-auto border rounded-md shadow-sm">
         <h1 className="text-xl font-bold">Your Scooter</h1>
-        <p>Battery: {vehicleData.soc}%</p>
-        <p>Location: {vehicleData.location?.latitude}, {vehicleData.location?.longitude}</p>
-        <p>Range: {vehicleData.estimatedRange} km</p>
-        <p>Powered: {vehicleData.poweredOn ? 'On' : 'Off'}</p>
-        <p>Odometer: {vehicleData.odometer} km</p>
+        <FormError message={error || ''}/>
+        <p><strong>ID:</strong> {vehicleData.id}</p>
+        <p><strong>Battery:</strong> {vehicleData.soc}%</p>
+        <p><strong>Location:</strong> {vehicleData.location?.latitude}, {vehicleData.location?.longitude}</p>
+        <p><strong>Range:</strong> {vehicleData.estimatedRange} km</p>
+        <p><strong>Powered:</strong> {vehicleData.poweredOn ? 'On' : 'Off'}</p>
+        <p><strong>Odometer:</strong> {vehicleData.odometer} km</p>
+        <div className="pt-2">
+          <Button onClick={handleUnpair} disabled={loading}>
+            {loading ? 'Unpairing...' : 'Unpair'}
+          </Button>
+        </div>
       </div>
     );
   }
 
   return (
-    <form onSubmit={handlePair} className="p-4 space-y-4 max-w-sm mx-auto">
+    <div className="p-4 space-y-4 max-w-sm mx-auto border rounded-md shadow-sm">
       <h1 className="text-xl font-bold">Pair Your Scooter</h1>
+      <FormError message={error || ''}/>
       <Input
         type="text"
         label="Scooter Code"
         placeholder="Enter code"
         value={vehicleCode}
-        onChange={(e) => setVehicleCode(e.target.value)}
+        onChange={(e) => {
+          setError(null);
+          setVehicleCode(e.target.value);
+        }}
         required
       />
-      <Button type="submit">Pair</Button>
-      <FormError message={error || ''}/>
-    </form>
+      <Button onClick={handlePair} disabled={loading}>
+        {loading ? 'Pairing...' : 'Pair'}
+      </Button>
+    </div>
   );
 };
