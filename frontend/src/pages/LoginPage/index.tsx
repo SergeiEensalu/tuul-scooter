@@ -5,6 +5,7 @@ import {useNavigate, Link} from 'react-router-dom';
 import {Input} from '../../shared/ui/Input';
 import {Button} from '../../shared/ui/Button';
 import {FormError} from '../../shared/ui/FormError';
+import {getReadableErrorMessage} from "../../shared/utils/getReadableErrorMessage";
 
 export const LoginPage: React.FC = () => {
   const navigate = useNavigate();
@@ -18,8 +19,7 @@ export const LoginPage: React.FC = () => {
       await signInWithEmailAndPassword(auth, email, password);
       navigate('/');
     } catch (err: any) {
-      // TODO BY SERGEI EENSALU: Error messages should be translated to human readable way
-      setError(err.message);
+      setError(getReadableErrorMessage(err));
     }
   };
 

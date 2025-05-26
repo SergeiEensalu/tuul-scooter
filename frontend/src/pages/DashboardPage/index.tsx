@@ -6,9 +6,9 @@ import {FormError} from '../../shared/ui/FormError';
 import {pair} from '../../features/scooter/pair';
 import {unpair} from '../../features/scooter/unpair';
 import {useVehicle} from "../../shared/hooks/useVehicle";
-import {parseApiError} from '../../shared/utils/parseApiError';
 import {sendCommand} from '../../features/scooter/sendCommand';
 import {Loader} from "../../shared/ui/Loader";
+import {getReadableErrorMessage} from "../../shared/utils/getReadableErrorMessage";
 
 export const DashboardPage: React.FC = () => {
 
@@ -36,6 +36,8 @@ export const DashboardPage: React.FC = () => {
     }
   }, []);
 
+  const scrollToTop = () => window.scrollTo({top: 0, behavior: 'smooth'});
+
   const handlePair = async () => {
     setError(null);
     setIsPairing(true);
@@ -43,7 +45,8 @@ export const DashboardPage: React.FC = () => {
     setIsPairing(false);
 
     if (!result.success) {
-      setError(parseApiError(result));
+      setError(getReadableErrorMessage(result));
+      scrollToTop()
       return;
     }
 
@@ -58,7 +61,8 @@ export const DashboardPage: React.FC = () => {
     setIsUnpairing(false);
 
     if (!result.success) {
-      setError(parseApiError(result));
+      setError(getReadableErrorMessage(result));
+      scrollToTop()
       return;
     }
 
@@ -73,7 +77,8 @@ export const DashboardPage: React.FC = () => {
     setIsSendingCommand(null);
 
     if (!result.success) {
-      setError(parseApiError(result));
+      setError(getReadableErrorMessage(result));
+      scrollToTop()
       return;
     }
 

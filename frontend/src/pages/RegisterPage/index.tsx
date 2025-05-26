@@ -5,6 +5,7 @@ import {useNavigate, Link} from 'react-router-dom';
 import {Input} from '../../shared/ui/Input';
 import {Button} from '../../shared/ui/Button';
 import {FormError} from '../../shared/ui/FormError';
+import {getReadableErrorMessage} from "../../shared/utils/getReadableErrorMessage";
 
 export const RegisterPage: React.FC = () => {
   const navigate = useNavigate();
@@ -25,8 +26,7 @@ export const RegisterPage: React.FC = () => {
       await createUserWithEmailAndPassword(auth, email, password);
       navigate('/');
     } catch (err: any) {
-      // TODO BY SERGEI EENSALU: Error messages should be translated to human readable way
-      setError(err.message);
+      setError(getReadableErrorMessage(err));
     }
   };
 
