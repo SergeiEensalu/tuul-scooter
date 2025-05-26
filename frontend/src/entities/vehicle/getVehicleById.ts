@@ -10,9 +10,9 @@ export const getVehicleById = async (vehicleId: string): Promise<ApiResult<Vehic
       data: {
         id: vehicleId,
         location: {latitude: 59.4402, longitude: 24.7284}, // Ha! My favourite beer place! Near your office BTW
-        soc: 87,
+        soc: 20,
         odometer: 1223,
-        poweredOn: false,
+        poweredOn: true,
         estimatedRange: 42,
         vehicleCode: 'code1',
       },
