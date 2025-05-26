@@ -6,6 +6,7 @@ import {Input} from '../../shared/ui/Input';
 import {Button} from '../../shared/ui/Button';
 import {FormError} from '../../shared/ui/FormError';
 import {getReadableErrorMessage} from "../../shared/utils/getReadableErrorMessage";
+import {CenteredCard} from "../../shared/ui/CenteredCard";
 
 export const RegisterPage: React.FC = () => {
   const navigate = useNavigate();
@@ -32,41 +33,43 @@ export const RegisterPage: React.FC = () => {
   };
 
   return (
-    <form onSubmit={handleRegister} className="p-4 space-y-4 max-w-sm mx-auto">
-      <h1 className="text-xl font-bold">Register</h1>
-      <FormError message={error || ''}/>
+    <CenteredCard>
+      <form onSubmit={handleRegister} className="p-4 space-y-4 max-w-sm mx-auto">
+        <h1 className="text-xl font-bold">Register</h1>
+        <FormError message={error || ''}/>
 
-      <Input
-        type="email"
-        label="Email"
-        placeholder="you@example.com"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        required
-      />
-      <Input
-        type="password"
-        label="Password"
-        placeholder="••••••••"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        required
-      />
-      <Input
-        type="password"
-        label="Confirm Password"
-        placeholder="••••••••"
-        value={confirmPassword}
-        onChange={(e) => setConfirmPassword(e.target.value)}
-        required
-      />
-      <Button type="submit">Create Account</Button>
-      <p className="text-sm">
-        Already have an account?{' '}
-        <Link to="/login" className="text-blue-600 underline">
-          Log in
-        </Link>
-      </p>
-    </form>
+        <Input
+          type="email"
+          label="Email"
+          placeholder="you@example.com"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+        />
+        <Input
+          type="password"
+          label="Password"
+          placeholder="••••••••"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+        />
+        <Input
+          type="password"
+          label="Confirm Password"
+          placeholder="••••••••"
+          value={confirmPassword}
+          onChange={(e) => setConfirmPassword(e.target.value)}
+          required
+        />
+        <Button type="submit">Create Account</Button>
+        <p className="text-sm">
+          Already have an account?{' '}
+          <Link to="/login" className="text-blue-600 underline">
+            Log in
+          </Link>
+        </p>
+      </form>
+    </CenteredCard>
   );
 };

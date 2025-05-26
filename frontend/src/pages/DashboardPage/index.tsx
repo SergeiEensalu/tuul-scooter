@@ -11,6 +11,7 @@ import {Loader} from "../../shared/ui/Loader";
 import {getReadableErrorMessage} from "../../shared/utils/getReadableErrorMessage";
 import {BatteryBar} from "../../shared/ui/BatteryBar";
 import {Spinner} from "../../shared/ui/Spinner";
+import {CenteredCard} from "../../shared/ui/CenteredCard";
 
 export const DashboardPage: React.FC = () => {
 
@@ -95,7 +96,7 @@ export const DashboardPage: React.FC = () => {
 
   if (vehicleData) {
     return (
-      <div className="p-4 space-y-4 max-w-md mx-auto border rounded-xl shadow-sm">
+      <CenteredCard>
         <div>
           <h1 className="text-2xl font-bold flex items-center gap-2">🛴 Your Scooter</h1>
           <p className="text-sm text-gray-400">ID: {vehicleData.id}</p>
@@ -158,13 +159,13 @@ export const DashboardPage: React.FC = () => {
             {isUnpairing ? <Spinner/> : 'Unpair'}
           </Button>
         </div>
-      </div>
-    )
-      ;
+
+      </CenteredCard>
+    );
   }
 
   return (
-    <div className="p-4 space-y-4 max-w-md mx-auto border rounded-xl shadow-sm">
+    <CenteredCard>
       <h1 className="text-xl font-bold">Pair Your Scooter</h1>
       <FormError message={error || ''}/>
       <Input
@@ -181,6 +182,6 @@ export const DashboardPage: React.FC = () => {
       <Button onClick={handlePair} disabled={isBusy}>
         {isPairing ? <Spinner/> : 'Pair'}
       </Button>
-    </div>
+    </CenteredCard>
   );
 };
