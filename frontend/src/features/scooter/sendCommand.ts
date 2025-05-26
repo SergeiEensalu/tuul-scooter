@@ -14,6 +14,7 @@ export const sendCommand = async (
       {command, vehicleId}
     );
     return {success: true, data: undefined};
+    // I hate any-s. But let it be here.
   } catch (err: any) {
     return {
       success: false,

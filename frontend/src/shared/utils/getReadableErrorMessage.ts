@@ -3,7 +3,7 @@ import {errorMessages} from '../constants/errorMessages';
 export const getReadableErrorMessage = (error: unknown): string => {
   if (!error || typeof error !== 'object') return errorMessages.UNKNOWN;
 
-  const err = error as any;
+  const err = error as any; // I hate any-s. But let it be here.
 
   // Firebase errors
   if (typeof err.code === 'string' && errorMessages[err.code]) {

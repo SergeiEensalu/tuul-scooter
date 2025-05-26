@@ -9,6 +9,7 @@ export const unpair = async (vehicleId: string): Promise<ApiResult> => {
       {vehicleId}
     );
     return {success: true, data: undefined};
+    // I hate any-s. But let it be here.
   } catch (err: any) {
     return {
       success: false,

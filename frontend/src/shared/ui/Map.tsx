@@ -46,6 +46,7 @@ export const Map: React.FC<Props> = ({scooterLocation, userLocation}) => {
       zoom={14}
     >
       {scooterLocation && (
+        // Comment by Sergei: Yes, deprecated... I know! As of February 21st, 2024, google.maps.Marker is deprecated.
         <Marker
           position={{
             lat: scooterLocation.latitude,
@@ -55,6 +56,7 @@ export const Map: React.FC<Props> = ({scooterLocation, userLocation}) => {
         />
       )}
       {userLocation && (
+        // Comment by Sergei: Yes, deprecated... I know! As of February 21st, 2024, google.maps.Marker is deprecated.
         <Marker
           position={{
             lat: userLocation.latitude,

@@ -25,6 +25,7 @@ export const RegisterPage: React.FC = () => {
     try {
       await createUserWithEmailAndPassword(auth, email, password);
       navigate('/');
+      // I hate any-s. But let it be here.
     } catch (err: any) {
       setError(getReadableErrorMessage(err));
     }

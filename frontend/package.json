@@ -3,8 +3,12 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "engines": {
+    "node": "20"
+  },
   "scripts": {
-    "dev": "npm run prepare:env && cross-env VITE_USE_FIREBASE_MOCK=true vite",
+    "dev:withMock": "npm run prepare:env && cross-env VITE_USE_FIREBASE_MOCK=true vite",
+    "dev:withoutMock": "npm run prepare:env && cross-env VITE_USE_FIREBASE_MOCK=false vite",
     "build": "vite build",
     "lint": "eslint src --ext .ts,.tsx,.js,.jsx",
     "preview": "vite preview",
@@ -35,7 +39,6 @@
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.19",
-    "globals": "^16.0.0",
     "postcss": "^8.5.3",
     "prettier": "^3.5.3",
     "tailwindcss": "^3.4.17",

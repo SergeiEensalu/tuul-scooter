@@ -3,7 +3,7 @@ import {auth, db} from '../../config/firebase';
 import {ApiResult} from "../../shared/types/api";
 
 export type UserProfile = {
-  createdAt: any;
+  createdAt: string;
   name: string | null;
   email: string;
   phoneNo: string | null;
