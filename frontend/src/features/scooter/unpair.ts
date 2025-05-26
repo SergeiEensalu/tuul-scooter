@@ -1,22 +1,14 @@
-import {auth} from "../../config/firebase";
 import {ApiResult} from "../../shared/types/api";
-import {http} from "../../lib/http";
+import {fetchWithToken} from "../../shared/utils/fetchWithToken";
 
 export const unpair = async (vehicleId: string): Promise<ApiResult> => {
-  const token = await auth.currentUser?.getIdToken();
-
-  if (!token) {
-    return {success: false, message: 'User not authenticated'}
-  }
-
   try {
-    await http<void>(
-      `https://europe-west3-coscooter-eu-staging.cloudfunctions.net/pair?apiKey=${token}`,
+    await fetchWithToken<void>(
+      'https://europe-west3-coscooter-eu-staging.cloudfunctions.net/pair',
       'DELETE',
       {vehicleId}
     );
-
-    return {success: true};
+    return {success: true, data: undefined};
   } catch (err: any) {
     return {
       success: false,
@@ -24,4 +16,4 @@ export const unpair = async (vehicleId: string): Promise<ApiResult> => {
       reason: err.reason,
     };
   }
-}
+};

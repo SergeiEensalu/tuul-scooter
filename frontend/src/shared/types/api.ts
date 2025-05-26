@@ -1,3 +1,13 @@
-type ResultSuccess = { success: true };
-type ResultError = { success: false; message: string; reason?: string };
-export type ApiResult = ResultSuccess | ResultError;
+type ApiSuccess<T> = {
+  success: true;
+  data: T;
+};
+
+type ApiError = {
+  success: false;
+  message: string;
+  reason?: string;
+  code?: string;
+};
+
+export type ApiResult<T = void> = ApiSuccess<T> | ApiError;
