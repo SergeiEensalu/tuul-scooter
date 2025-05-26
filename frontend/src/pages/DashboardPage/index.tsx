@@ -8,6 +8,7 @@ import {unpair} from '../../features/scooter/unpair';
 import {useVehicle} from "../../shared/hooks/useVehicle";
 import {parseApiError} from '../../shared/utils/parseApiError';
 import {sendCommand} from '../../features/scooter/sendCommand';
+import {Loader} from "../../shared/ui/Loader";
 
 export const DashboardPage: React.FC = () => {
 
@@ -82,7 +83,7 @@ export const DashboardPage: React.FC = () => {
   const isBusy = isPairing || isUnpairing || isSendingCommand !== null;
 
   if (loading) {
-    return <p>Loading scooter data...</p>;
+    return <Loader/>;
   }
 
   if (vehicleData) {
