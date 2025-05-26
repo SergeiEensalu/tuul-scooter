@@ -6,41 +6,61 @@ import {pairScooter} from '../../features/pairScooter/pairScooter';
 import {unpairScooter} from '../../features/pairScooter/unpairScooter';
 import {useVehicle} from "../../shared/hooks/useVehicle";
 import {parseApiError} from '../../shared/utils/parseApiError';
+import {sendCommand} from '../../features/sendCommand/sendCommand';
 
 export const DashboardPage: React.FC = () => {
   const {vehicleData, refresh} = useVehicle();
   const [vehicleCode, setVehicleCode] = useState('');
   const [error, setError] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false);
+  const [isPairing, setIsPairing] = useState(false);
+  const [isUnpairing, setIsUnpairing] = useState(false);
+  const [isSendingCommand, setIsSendingCommand] = useState<'START' | 'STOP' | null>(null);
 
   const handlePair = async () => {
     setError(null);
-    setLoading(true);
+    setIsPairing(true);
     const result = await pairScooter(vehicleCode);
-    setLoading(false);
+    setIsPairing(false);
 
     if (!result.success) {
       setError(parseApiError(result));
       return;
     }
 
-    refresh(); // refetch vehicle after pairing
+    await refresh();
   };
 
   const handleUnpair = async () => {
     if (!vehicleData?.id) return;
     setError(null);
-    setLoading(true);
+    setIsUnpairing(true);
     const result = await unpairScooter(vehicleData.id);
-    setLoading(false);
+    setIsUnpairing(false);
 
     if (!result.success) {
       setError(parseApiError(result));
       return;
     }
 
-    refresh(); // refetch after unpair
+    await refresh();
   };
+
+  const handleCommand = async (cmd: 'START' | 'STOP') => {
+    if (!vehicleData?.id) return;
+    setError(null);
+    setIsSendingCommand(cmd);
+    const result = await sendCommand(vehicleData.id, cmd);
+    setIsSendingCommand(null);
+
+    if (!result.success) {
+      setError(parseApiError(result));
+      return;
+    }
+
+    await refresh();
+  };
+
+  const isBusy = isPairing || isUnpairing || isSendingCommand !== null;
 
   if (vehicleData) {
     return (
@@ -53,9 +73,18 @@ export const DashboardPage: React.FC = () => {
         <p><strong>Range:</strong> {vehicleData.estimatedRange} km</p>
         <p><strong>Powered:</strong> {vehicleData.poweredOn ? 'On' : 'Off'}</p>
         <p><strong>Odometer:</strong> {vehicleData.odometer} km</p>
+        <div className="flex gap-2">
+          <Button onClick={() => handleCommand('START')} disabled={isBusy}>
+            {isSendingCommand === 'START' ? 'Turning ON...' : 'Turn ON'}
+          </Button>
+          <Button onClick={() => handleCommand('STOP')} disabled={isBusy}>
+            {isSendingCommand === 'STOP' ? 'Turning OFF...' : 'Turn OFF'}
+          </Button>
+        </div>
+
         <div className="pt-2">
-          <Button onClick={handleUnpair} disabled={loading}>
-            {loading ? 'Unpairing...' : 'Unpair'}
+          <Button onClick={handleUnpair} disabled={isBusy}>
+            {isUnpairing ? 'Unpairing...' : 'Unpair'}
           </Button>
         </div>
       </div>
@@ -77,8 +106,8 @@ export const DashboardPage: React.FC = () => {
         }}
         required
       />
-      <Button onClick={handlePair} disabled={loading}>
-        {loading ? 'Pairing...' : 'Pair'}
+      <Button onClick={handlePair} disabled={isBusy}>
+        {isPairing ? 'Pairing...' : 'Pair'}
       </Button>
     </div>
   );
