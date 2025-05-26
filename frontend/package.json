@@ -4,13 +4,14 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "npm run prepare:env && cross-env VITE_USE_FIREBASE_MOCK=false vite",
+    "dev": "npm run prepare:env && cross-env VITE_USE_FIREBASE_MOCK=true vite",
     "build": "vite build",
     "lint": "eslint src --ext .ts,.tsx,.js,.jsx",
     "preview": "vite preview",
     "prepare:env": "node -e \"const fs=require('fs'); if(!fs.existsSync('.env')){fs.copyFileSync('.env.example','.env');console.log('.env created from .env.example');} else {console.log('.env already exists');}\""
   },
   "dependencies": {
+    "@react-google-maps/api": "^2.20.6",
     "firebase": "^11.7.3",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",

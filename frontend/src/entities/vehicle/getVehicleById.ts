@@ -26,7 +26,10 @@ export const getVehicleById = async (vehicleId: string): Promise<VehicleData | n
 
   return {
     id: snap.id,
-    location: data.location,
+    location: {
+      latitude: data.location.latitude,
+      longitude: data.location.longitude,
+    },
     soc: data.soc,
     odometer: data.odometer,
     poweredOn: data.poweredOn,

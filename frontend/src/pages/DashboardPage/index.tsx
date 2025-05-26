@@ -1,6 +1,7 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Input} from '../../shared/ui/Input';
 import {Button} from '../../shared/ui/Button';
+import {Map} from '../../shared/ui/Map';
 import {FormError} from '../../shared/ui/FormError';
 import {pair} from '../../features/scooter/pair';
 import {unpair} from '../../features/scooter/unpair';
@@ -9,12 +10,30 @@ import {parseApiError} from '../../shared/utils/parseApiError';
 import {sendCommand} from '../../features/scooter/sendCommand';
 
 export const DashboardPage: React.FC = () => {
-  const {vehicleData, refresh} = useVehicle();
+
+  const {vehicleData, loading, refresh} = useVehicle();
   const [vehicleCode, setVehicleCode] = useState('');
   const [error, setError] = useState<string | null>(null);
   const [isPairing, setIsPairing] = useState(false);
   const [isUnpairing, setIsUnpairing] = useState(false);
   const [isSendingCommand, setIsSendingCommand] = useState<'START' | 'STOP' | null>(null);
+  const [userLocation, setUserLocation] = useState<{ latitude: number; longitude: number } | null>(null);
+
+  useEffect(() => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          setUserLocation({
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude,
+          });
+        },
+        () => {
+          setUserLocation(null);
+        }
+      );
+    }
+  }, []);
 
   const handlePair = async () => {
     setError(null);
@@ -62,6 +81,10 @@ export const DashboardPage: React.FC = () => {
 
   const isBusy = isPairing || isUnpairing || isSendingCommand !== null;
 
+  if (loading) {
+    return <p>Loading scooter data...</p>;
+  }
+
   if (vehicleData) {
     return (
       <div className="p-4 space-y-4 max-w-sm mx-auto border rounded-md shadow-sm">
@@ -73,6 +96,10 @@ export const DashboardPage: React.FC = () => {
         <p><strong>Range:</strong> {vehicleData.estimatedRange} km</p>
         <p><strong>Powered:</strong> {vehicleData.poweredOn ? 'On' : 'Off'}</p>
         <p><strong>Odometer:</strong> {vehicleData.odometer} km</p>
+        <Map
+          scooterLocation={vehicleData?.location ?? null}
+          userLocation={userLocation}
+        />
         <div className="flex gap-2">
           <Button onClick={() => handleCommand('START')} disabled={isBusy}>
             {isSendingCommand === 'START' ? 'Turning ON...' : 'Turn ON'}
