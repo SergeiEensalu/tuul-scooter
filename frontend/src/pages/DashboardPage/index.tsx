@@ -2,11 +2,11 @@ import React, {useState} from 'react';
 import {Input} from '../../shared/ui/Input';
 import {Button} from '../../shared/ui/Button';
 import {FormError} from '../../shared/ui/FormError';
-import {pairScooter} from '../../features/pairScooter/pairScooter';
-import {unpairScooter} from '../../features/pairScooter/unpairScooter';
+import {pair} from '../../features/scooter/pair';
+import {unpair} from '../../features/scooter/unpair';
 import {useVehicle} from "../../shared/hooks/useVehicle";
 import {parseApiError} from '../../shared/utils/parseApiError';
-import {sendCommand} from '../../features/sendCommand/sendCommand';
+import {sendCommand} from '../../features/scooter/sendCommand';
 
 export const DashboardPage: React.FC = () => {
   const {vehicleData, refresh} = useVehicle();
@@ -19,7 +19,7 @@ export const DashboardPage: React.FC = () => {
   const handlePair = async () => {
     setError(null);
     setIsPairing(true);
-    const result = await pairScooter(vehicleCode);
+    const result = await pair(vehicleCode);
     setIsPairing(false);
 
     if (!result.success) {
@@ -34,7 +34,7 @@ export const DashboardPage: React.FC = () => {
     if (!vehicleData?.id) return;
     setError(null);
     setIsUnpairing(true);
-    const result = await unpairScooter(vehicleData.id);
+    const result = await unpair(vehicleData.id);
     setIsUnpairing(false);
 
     if (!result.success) {
