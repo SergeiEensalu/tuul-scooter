@@ -1,0 +1,210 @@
+{
+	"info": {
+		"_postman_id": "4fef12bb-db94-499d-8f94-8caeb8ee8c0f",
+		"name": "Tuul",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "21796564"
+	},
+	"item": [
+		{
+			"name": "GET Vehicle",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{id_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/vehicles",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"vehicles"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST Register",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"name\": \"Sergei\",\n  \"email\": \"sergei@example.com\",\n  \"password\": \"password123\"\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/users/register",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"users",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST Reservation",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{id_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "\n{\n  \"vehicleId\": \"kCbIrwAHzV0CSzmrweIe\",\n  \"startTime\": \"2026-05-21T01:00:00Z\",\n  \"endTime\": \"2026-05-21T01:12:30Z\",\n  \"startLatitude\": 59.4370,\n  \"startLongitude\": 24.7536,\n  \"endLatitude\": 59.4380,\n  \"endLongitude\": 24.7550\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/reservations",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"reservations"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST Vehicles",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{id_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "\n{\n  \"vehicleId\": \"vehicle123\",\n  \"startTime\": \"2025-05-21T01:00:00Z\",\n  \"endTime\": \"2025-05-21T01:12:30Z\",\n  \"startLatitude\": 59.4370,\n  \"startLongitude\": 24.7536,\n  \"endLatitude\": 59.4380,\n  \"endLongitude\": 24.7550\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/vehicles",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"vehicles"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST Login",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{id_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"name\": \"Sergei\",\n  \"email\": \"sergei@example.com\",\n  \"password\": \"password123\"\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/users/login",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"users",
+						"login"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "url",
+			"value": "http://localhost:8080/v1",
+			"type": "string"
+		},
+		{
+			"key": "id_token",
+			"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkeFBkT3hHQ01mdmFwRFdiaDFUSSIsImVtYWlsIjoic2Vyc2Rzc3NzZ2VpMjczM2s3QGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ4MDMwOTgyLCJleHAiOjE3NDgxMTczODJ9.GsmKgWDrApjrWoU8tyEGp0lpHUi5Ka7BcCGWDy2Ykyg",
+			"type": "string"
+		}
+	]
+}
